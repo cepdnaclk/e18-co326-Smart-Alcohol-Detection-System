@@ -1,0 +1,595 @@
+[
+    {
+        "id": "01cbc25692dc9157",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cff84a1e2b29299e",
+        "type": "mqtt in",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "topic": "CO326/Alcohol/pub",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "959bd6b064b9ac0b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 760,
+        "wires": [
+            [
+                "5faf4f7c924cf7df",
+                "f2913934c2994381",
+                "db703c6fa342b509",
+                "65685c18efa93d97",
+                "acf0413d108572c8"
+            ]
+        ]
+    },
+    {
+        "id": "5faf4f7c924cf7df",
+        "type": "debug",
+        "z": "01cbc25692dc9157",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "aad529e1fe7989e9",
+        "type": "mqtt out",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "topic": "CO326/Alcohol/sub",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "959bd6b064b9ac0b",
+        "x": 1040,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "7ab5595a0bccf6f6",
+        "type": "mysql",
+        "z": "01cbc25692dc9157",
+        "mydb": "2202a61b13de4248",
+        "name": "DB",
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "cf9273497c7748fc"
+            ]
+        ]
+    },
+    {
+        "id": "277c8ac01be1c979",
+        "type": "inject",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Create table sensorDataNew(timestamp varchar(80),concentration INT);",
+        "payload": "",
+        "payloadType": "date",
+        "x": 640,
+        "y": 380,
+        "wires": [
+            [
+                "7ab5595a0bccf6f6"
+            ]
+        ]
+    },
+    {
+        "id": "cf9273497c7748fc",
+        "type": "debug",
+        "z": "01cbc25692dc9157",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "8ea1e5a328afd2e8",
+        "type": "inject",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Insert INTO sensorData(timestamp,concentration) Values(\"test\",\"1234\");",
+        "payload": "",
+        "payloadType": "date",
+        "x": 640,
+        "y": 440,
+        "wires": [
+            [
+                "7ab5595a0bccf6f6"
+            ]
+        ]
+    },
+    {
+        "id": "f2913934c2994381",
+        "type": "switch",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "1001",
+                "vt": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "961",
+                "vt": "num",
+                "v2": "1000",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "921",
+                "vt": "num",
+                "v2": "960",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "881",
+                "vt": "num",
+                "v2": "920",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "841",
+                "vt": "num",
+                "v2": "880",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "801",
+                "vt": "num",
+                "v2": "840",
+                "v2t": "num"
+            },
+            {
+                "t": "lt",
+                "v": "800",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 7,
+        "x": 630,
+        "y": 900,
+        "wires": [
+            [
+                "b96224df89a2108e"
+            ],
+            [
+                "a06b313fdf1c9e46"
+            ],
+            [
+                "5e502c8102812195"
+            ],
+            [
+                "28b58ab757381607"
+            ],
+            [
+                "0de697ceafb868a7"
+            ],
+            [
+                "1310f4f92f148d5f"
+            ],
+            [
+                "c1a07b814aa62271"
+            ]
+        ]
+    },
+    {
+        "id": "04d094fbf6d6369b",
+        "type": "inject",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{ \"concentration\":\"21\",\"test\":\"test\"}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 900,
+        "wires": [
+            [
+                "febb9609cd201342"
+            ]
+        ]
+    },
+    {
+        "id": "febb9609cd201342",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 2",
+        "func": "msg.payload = msg.payload.concentration;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b96224df89a2108e",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 3",
+        "func": "msg.payload = 6;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 780,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "a06b313fdf1c9e46",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 4",
+        "func": "msg.payload = 5\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 820,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "5e502c8102812195",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 5",
+        "func": "msg.payload = 4\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 860,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "28b58ab757381607",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 6",
+        "func": "msg.payload = 3\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 900,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "0de697ceafb868a7",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 7",
+        "func": "msg.payload = 2\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 940,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "1310f4f92f148d5f",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 8",
+        "func": "msg.payload = 1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 980,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "c1a07b814aa62271",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 9",
+        "func": "msg.payload = 0\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 1020,
+        "wires": [
+            [
+                "aad529e1fe7989e9"
+            ]
+        ]
+    },
+    {
+        "id": "db703c6fa342b509",
+        "type": "function",
+        "z": "01cbc25692dc9157",
+        "name": "function 10",
+        "func": "let str = String(msg.payload);\nlet str1 = \"Insert INTO sensorDataNew(timestamp,concentration) Values(CURRENT_TIMESTAMP,\";\nlet str2 =  \")\";\nmsg.topic = str1.concat('', str,'',str2);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 620,
+        "wires": [
+            [
+                "7ab5595a0bccf6f6",
+                "34083ba67a451ac3"
+            ]
+        ]
+    },
+    {
+        "id": "34083ba67a451ac3",
+        "type": "debug",
+        "z": "01cbc25692dc9157",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "65685c18efa93d97",
+        "type": "ui_gauge",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "group": "06410b65358e4e4b",
+        "order": 2,
+        "width": 12,
+        "height": 7,
+        "gtype": "gage",
+        "title": "Alcohol Concentration",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "800",
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "866",
+        "seg2": "932",
+        "diff": false,
+        "className": "",
+        "x": 760,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "277efa0e3dc38b95",
+        "type": "convert",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "convertTo": "number",
+        "x": 430,
+        "y": 900,
+        "wires": [
+            [
+                "f2913934c2994381"
+            ]
+        ]
+    },
+    {
+        "id": "acf0413d108572c8",
+        "type": "ui_chart",
+        "z": "01cbc25692dc9157",
+        "name": "",
+        "group": "06410b65358e4e4b",
+        "order": 3,
+        "width": 12,
+        "height": 7,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "800",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "10",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 570,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "959bd6b064b9ac0b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2202a61b13de4248",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "CO326",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "06410b65358e4e4b",
+        "type": "ui_group",
+        "name": "Base",
+        "tab": "47a97b96b3baf067",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "47a97b96b3baf067",
+        "type": "ui_tab",
+        "name": "Alcohol Breathalyzer",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
